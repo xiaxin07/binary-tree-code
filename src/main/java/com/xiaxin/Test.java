@@ -1,6 +1,7 @@
 package com.xiaxin;
 
 import com.mj.printer.BinaryTrees;
+import com.xiaxin.BinarySearchTree.Visitor;
 
 public class Test {
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Test {
 
 //
 
-        binarySearchTree.inOrder(new BinarySearchTree.Visitor<Integer>() {
+        binarySearchTree.levelOrder(new Visitor<Integer>() {
             @Override
             public boolean visit(Integer element) {
                 System.out.println(element + "_");

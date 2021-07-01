@@ -3,13 +3,9 @@ package com.avl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mj.file.Files;
-import com.mj.printer.BinaryTreeInfo;
+import com.avl.tree.AVLTree;
+import com.avl.tree.BST;
 import com.mj.printer.BinaryTrees;
-import com.mj.tree.AVLTree;
-import com.mj.tree.BST;
-import com.mj.tree.BinaryTree;
-import com.mj.tree.BinaryTree.Visitor;
 
 @SuppressWarnings("unused")
 public class Main {

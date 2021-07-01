@@ -110,67 +110,67 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
     }
 
-    public void preOrderTraversal() {
-        preOrderTraversal(root);
-    }
-
-    private void preOrderTraversal(Node<E> node) {
-
-        if (node == null) {
-            return;
-        }
-        E element = node.element;
-        System.out.println(element);
-
-        preOrderTraversal(node.left);
-        preOrderTraversal(node.right);
-    }
-
-
-    public void inOrderTraversal() {
-        inOrderTraversal(root);
-    }
-
-    private void inOrderTraversal(Node<E> node) {
-        if (node == null) {
-            return;
-        }
-        inOrderTraversal(node.left);
-        System.out.println(node.element);
-        inOrderTraversal(node.right);
-    }
-
-    public void postOrderTraversal() {
-        postOrderTraversal(root);
-    }
-
-    private void postOrderTraversal(Node<E> node) {
-        if (node == null) {
-            return;
-        }
-        postOrderTraversal(node.left);
-        postOrderTraversal(node.right);
-        System.out.println(node.element);
-    }
-
-    public void levelOrderTraversal() {
-        if (root == null) {
-            return;
-        }
-        Queue<Node<E>> queue = new LinkedList<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            Node<E> node = queue.poll();
-            System.out.println(node.element);
-            if (node.left != null) {
-                queue.offer(node.left);
-            }
-            if (node.right != null) {
-                queue.offer(node.right);
-            }
-        }
-    }
+    //public void preOrderTraversal() {
+    //    preOrderTraversal(root);
+    //}
+    //
+    //private void preOrderTraversal(Node<E> node) {
+    //
+    //    if (node == null) {
+    //        return;
+    //    }
+    //    E element = node.element;
+    //    System.out.println(element);
+    //
+    //    preOrderTraversal(node.left);
+    //    preOrderTraversal(node.right);
+    //}
+    //
+    //
+    //public void inOrderTraversal() {
+    //    inOrderTraversal(root);
+    //}
+    //
+    //private void inOrderTraversal(Node<E> node) {
+    //    if (node == null) {
+    //        return;
+    //    }
+    //    inOrderTraversal(node.left);
+    //    System.out.println(node.element);
+    //    inOrderTraversal(node.right);
+    //}
+    //
+    //public void postOrderTraversal() {
+    //    postOrderTraversal(root);
+    //}
+    //
+    //private void postOrderTraversal(Node<E> node) {
+    //    if (node == null) {
+    //        return;
+    //    }
+    //    postOrderTraversal(node.left);
+    //    postOrderTraversal(node.right);
+    //    System.out.println(node.element);
+    //}
+    //
+    //public void levelOrderTraversal() {
+    //    if (root == null) {
+    //        return;
+    //    }
+    //    Queue<Node<E>> queue = new LinkedList<>();
+    //    queue.offer(root);
+    //
+    //    while (!queue.isEmpty()) {
+    //        Node<E> node = queue.poll();
+    //        System.out.println(node.element);
+    //        if (node.left != null) {
+    //            queue.offer(node.left);
+    //        }
+    //        if (node.right != null) {
+    //            queue.offer(node.right);
+    //        }
+    //    }
+    //}
 
     public void add(E element) {
         // 1.判空

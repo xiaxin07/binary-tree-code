@@ -5,7 +5,7 @@ import com.xiaxin.BinarySearchTree.Visitor;
 
 public class Test {
     public static void main(String[] args) {
-        Integer[] list = new Integer[]{17, 25, 16, 19, 40, 69, 53, 12, 10};
+        Integer[] list = new Integer[]{8, 4, 13, 2, 6, 10, 1, 3, 5, 7, 9, 12, 11};
         BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
         for (Integer e : list) {
             binarySearchTree.add(e);
@@ -32,5 +32,8 @@ public class Test {
                 return false;
             }
         });
+
+        System.out.println();
+        binarySearchTree.predecessor(4);
     }
 }

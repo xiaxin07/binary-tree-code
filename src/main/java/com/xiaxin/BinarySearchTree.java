@@ -34,6 +34,130 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         return size;
     }
 
+    public void add(E element) {
+        // 1.判空
+        // 2.判断是否是第一个节点
+        // 3.找到父节点 添加元素
+        if (element == null) {
+            throw new IllegalArgumentException("element must not be null");
+        }
+
+        if (root == null) {
+            root = new Node<>(element, null);
+            size++;
+            return;
+        }
+        Node<E> parent = root;
+        Node<E> node = this.root;
+        int cmp = 0;
+        while (node != null) {
+            parent = node;
+            cmp = compare(element, node.element);
+            if (cmp > 0) {
+                node = node.right;
+            } else if (cmp < 0) {
+                node = node.left;
+            } else {
+                node.element = element;
+                return;
+            }
+        }
+        Node<E> newNode = new Node<>(element, parent);
+        // 插入到父节点的哪个位置
+        if (cmp > 0) {
+            parent.right = newNode;
+        } else {
+            parent.left = newNode;
+        }
+
+        size++;
+    }
+
+    public void remove(E element) {
+        remove(node(element));
+    }
+
+    public void remove(Node<E> node) {
+        if (node == null) {
+            return;
+        }
+        size--;
+        if (node.hasTwoChildren()) {
+
+        }
+    }
+
+    public Node<E> node(E element) {
+        elementNotNullCheck(element);
+
+        Node<E> node = root;
+        while (node != null) {
+            int compare = compare(element, node.element);
+            if (compare > 0) {
+                node = node.right;
+            } else if (compare < 0) {
+                node = node.left;
+            } else {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 前驱节点
+     *
+     * @param node
+     * @return
+     */
+    private Node<E> predecessor(Node<E> node) {
+
+        if (node == null) {
+            return null;
+        }
+        // 前驱节点在左子树当中（left.right.right.right....）
+        Node<E> p = node.left;
+        if (p != null) {
+            while (p.right != null) {
+                p = p.right;
+            }
+            System.out.println(p.element);
+            return p;
+        }
+        // 从父节点、祖父节点中寻找前驱节点
+        while (node.parent != null && node != node.parent.right) {
+            node = node.parent;
+        }
+
+        return node.parent;
+    }
+
+    /**
+     * 后继节点
+     *
+     * @param node
+     * @return
+     */
+    private Node<E> successor(Node<E> node) {
+        if (node == null) {
+            return null;
+        }
+        // 前驱节点在右子树当中（right.left.left.left....）
+        Node<E> p = node.right;
+        if (p != null) {
+            while (p.left != null) {
+                p = p.left;
+            }
+            System.out.println(p.element);
+            return p;
+        }
+        // 从父节点、祖父节点中寻找后继节点
+        while (node.parent != null && node != node.parent.left) {
+            node = node.parent;
+        }
+        return node.parent;
+    }
+
     public void preOrder(Visitor<E> visitor) {
         if (visitor == null) {
             return;
@@ -110,6 +234,10 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
     }
 
+    public boolean contains(E element) {
+        return true;
+    }
+
     //public void preOrderTraversal() {
     //    preOrderTraversal(root);
     //}
@@ -172,92 +300,15 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     //    }
     //}
 
-    public void add(E element) {
-        // 1.判空
-        // 2.判断是否是第一个节点
-        // 3.找到父节点 添加元素
-        if (element == null) {
-            throw new IllegalArgumentException("element must not be null");
-        }
-
-        if (root == null) {
-            root = new Node<>(element, null);
-            size++;
-            return;
-        }
-        Node<E> parent = root;
-        Node<E> node = this.root;
-        int cmp = 0;
-        while (node != null) {
-            parent = node;
-            cmp = compare(element, node.element);
-            if (cmp > 0) {
-                node = node.right;
-            } else if (cmp < 0) {
-                node = node.left;
-            } else {
-                node.element = element;
-                return;
-            }
-        }
-        Node<E> newNode = new Node<>(element, parent);
-        // 插入到父节点的哪个位置
-        if (cmp > 0) {
-            parent.right = newNode;
-        } else {
-            parent.left = newNode;
-        }
-
-        size++;
-    }
-
-
-    public void remove(E element) {
-        remove(node(element));
-    }
-
-
-    public void remove(Node<E> node) {
-        if (node == null) {
-            return;
-        }
-        size--;
-        if (node.hasTwoChildren()) {
-
-        }
-    }
-
-    public Node<E> node(E element) {
-        elementNotNullCheck(element);
-
-        Node<E> node = root;
-        while (node != null) {
-            int compare = compare(element, node.element);
-            if (compare > 0) {
-                node = node.right;
-            } else if (compare < 0) {
-                node = node.left;
-            } else {
-                return node;
-            }
-        }
-        return null;
-    }
-
     public static void main(String[] args) {
 
     }
-
-    public boolean contains(E element) {
-        return true;
-    }
-
 
     private int compare(E e1, E e2) {
         if (comparator != null) {
             return comparator.compare(e1, e2);
         }
-        return ((Comparable<E>) e1).compareTo(e2);
+        return ((Comparable<E>)e1).compareTo(e2);
     }
 
     private void elementNotNullCheck(E element) {
@@ -273,19 +324,18 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
     @Override
     public Object left(Object node) {
-        return ((Node<E>) node).left;
+        return ((Node<E>)node).left;
     }
 
     @Override
     public Object right(Object node) {
-        return ((Node<E>) node).right;
+        return ((Node<E>)node).right;
     }
 
     @Override
     public Object string(Object node) {
-        return ((Node<E>) node).element;
+        return ((Node<E>)node).element;
     }
-
 
     public static abstract class Visitor<E> {
         boolean stop;
@@ -296,8 +346,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         public abstract boolean visit(E element);
     }
 
-
-    private static class Node<E> {
+    protected static class Node<E> {
         private E element;
         private Node<E> left;
         private Node<E> right;
@@ -307,7 +356,6 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
             this.element = element;
             this.parent = parent;
         }
-
 
         public boolean hasTwoChildren() {
             return left != null && right != null;

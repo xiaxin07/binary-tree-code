@@ -1,16 +1,17 @@
 package com.xiaxin;
 
+import com.avl.tree.BinaryTree;
 import com.mj.printer.BinaryTreeInfo;
 
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-//@SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
 public class BinarySearchTree<E> implements BinaryTreeInfo {
 
-    private Node<E> root;
-    private int size;
+    protected Node<E> root;
+    protected int size;
 
     private Comparator<E> comparator;
 
@@ -30,6 +31,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
     }
 
+
     public int size() {
         return size;
     }
@@ -43,8 +45,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
 
         if (root == null) {
-            root = new Node<>(element, null);
+            root = createNode(element, null);
             size++;
+            afterAdd(root);
             return;
         }
         Node<E> parent = root;
@@ -62,7 +65,8 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
                 return;
             }
         }
-        Node<E> newNode = new Node<>(element, parent);
+
+        Node<E> newNode = createNode(element, parent);
         // 插入到父节点的哪个位置
         if (cmp > 0) {
             parent.right = newNode;
@@ -71,6 +75,27 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
 
         size++;
+        afterAdd(newNode);
+    }
+
+    /**
+     * 添加node之后的调整
+     *
+     * @param node 新添加的节点
+     */
+    protected void afterAdd(Node<E> node) {
+    }
+
+    /**
+     * 删除node之后的调整
+     *
+     * @param node 被删除的节点
+     */
+    protected void afterRemove(Node<E> node) {
+    }
+
+    protected Node<E> createNode(E element, Node<E> parent) {
+        return new Node<>(element, parent);
     }
 
     public void remove(E element) {
@@ -308,7 +333,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         if (comparator != null) {
             return comparator.compare(e1, e2);
         }
-        return ((Comparable<E>)e1).compareTo(e2);
+        return ((Comparable<E>) e1).compareTo(e2);
     }
 
     private void elementNotNullCheck(E element) {
@@ -324,17 +349,17 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
     @Override
     public Object left(Object node) {
-        return ((Node<E>)node).left;
+        return ((Node<E>) node).left;
     }
 
     @Override
     public Object right(Object node) {
-        return ((Node<E>)node).right;
+        return ((Node<E>) node).right;
     }
 
     @Override
     public Object string(Object node) {
-        return ((Node<E>)node).element;
+        return node;
     }
 
     public static abstract class Visitor<E> {
@@ -347,14 +372,22 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     protected static class Node<E> {
-        private E element;
-        private Node<E> left;
-        private Node<E> right;
-        private Node<E> parent;
+        E element;
+        Node<E> left;
+        Node<E> right;
+        Node<E> parent;
 
         public Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;
+        }
+
+        public boolean isLeftChild() {
+            return parent != null && this == parent.left;
+        }
+
+        public boolean isRightChild() {
+            return parent != null && this == parent.right;
         }
 
         public boolean hasTwoChildren() {

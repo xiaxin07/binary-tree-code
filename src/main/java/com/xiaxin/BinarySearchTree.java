@@ -106,9 +106,40 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         if (node == null) {
             return;
         }
+        // 叶子结点
+        // 度为1的节点
+        // 度为2的节点
+
         size--;
         if (node.hasTwoChildren()) {
+            Node<E> successor = successor(node);
+            node.element = successor.element;
+            node = successor;
+        }
 
+        Node<E> replacement = node.left != null ? node.left : node.right;
+
+        if (replacement != null) {
+            replacement.parent = node.parent;
+            if (node.parent == null) {
+                root = replacement;
+            } else if (node == node.parent.left) {
+                node.parent.left = replacement;
+            } else {
+                node.parent.right = replacement;
+            }
+            afterRemove(node);
+        } else if (node.parent == null) {
+            root = null;
+            afterRemove(node);
+
+        } else {
+            if (node == node.parent.left) {
+                node.parent.left = null;
+            } else {
+                node.parent.right = null;
+            }
+            afterRemove(node);
         }
     }
 
@@ -359,7 +390,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
     @Override
     public Object string(Object node) {
-        return node;
+        return ((Node<E>) node).element;
     }
 
     public static abstract class Visitor<E> {

@@ -18,7 +18,7 @@ public class AVLTree<E> extends BinarySearchTree<E> {
                 // 更新高度
                 updateHeight(node);
             } else {
-                reBalance(node);
+                reBalance2(node);
                 break;
             }
         }
@@ -47,6 +47,66 @@ public class AVLTree<E> extends BinarySearchTree<E> {
                 rotateLeft(grand);
             }
         }
+    }
+
+    /**
+     * 统一所有旋转操作
+     *
+     * @param grand
+     */
+    private void reBalance2(Node<E> grand) {
+        Node<E> parent = ((AVLNode<E>) grand).tallerChild();
+        Node<E> node = ((AVLNode<E>) parent).tallerChild();
+        // 判断失衡节点是LL、RR、LR、RL的哪种情况
+        if (parent.isLeftChild()) {
+            if (node.isLeftChild()) {
+                rotate(grand, node, node.right, parent, parent.right, grand);
+            } else {
+                rotate(grand, parent, node.left, node, node.right, grand);
+            }
+        } else {
+            if (node.isLeftChild()) { // RL
+                rotate(grand, grand, node.left, node, node.right, parent);
+            } else { // RR
+                rotate(grand, grand, parent.left, parent, node.left, node);
+            }
+        }
+    }
+
+    private void rotate(Node<E> r,
+                        Node<E> b, Node<E> c,
+                        Node<E> d,
+                        Node<E> e, Node<E> f) {
+        // 让d成为根节点
+        d.parent = r.parent;
+        if (r.isLeftChild()) {
+            r.parent.left = d;
+        } else if (r.isRightChild()) {
+            r.parent.right = d;
+        } else {
+            root = d;
+        }
+
+        // b、c
+        b.right = c;
+        if (c != null) {
+            c.parent = b;
+        }
+        updateHeight(b);
+
+        b.parent = d;
+        d.left = b;
+
+        // e、f
+        f.left = e;
+        if (e != null) {
+            e.parent = f;
+        }
+        updateHeight(f);
+        f.parent = d;
+        d.right = f;
+
+        updateHeight(d);
     }
 
     private void rotateLeft(Node<E> grand) {

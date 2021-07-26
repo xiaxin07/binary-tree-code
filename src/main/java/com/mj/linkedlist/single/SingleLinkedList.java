@@ -1,6 +1,6 @@
 package com.mj.linkedlist.single;
 
-import com.mj.AbstractList;
+import com.mj.linkedlist.AbstractList;
 
 public class SingleLinkedList<E> extends AbstractList<E> {
 	private Node<E> first;

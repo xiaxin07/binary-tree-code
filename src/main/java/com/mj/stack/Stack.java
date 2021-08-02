@@ -1,7 +1,7 @@
 package com.mj.stack;
 
-import com.mj.list.ArrayList;
-import com.mj.list.List;
+import com.mj.stack.list.ArrayList;
+import com.mj.stack.list.List;
 
 public class Stack<E> {
 	private List<E> list = new ArrayList<>();

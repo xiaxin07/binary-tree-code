@@ -1,7 +1,7 @@
 package com.mj.queue;
 
-import com.mj.list.LinkedList;
-import com.mj.list.List;
+import com.mj.queue.list.LinkedList;
+import com.mj.queue.list.List;
 
 public class Deque<E> {
 	private List<E> list = new LinkedList<>();

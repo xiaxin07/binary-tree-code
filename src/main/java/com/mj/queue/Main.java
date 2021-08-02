@@ -1,7 +1,7 @@
 package com.mj.queue;
 
-import com.mj.circle.CircleDeque;
-import com.mj.circle.CircleQueue;
+import com.mj.queue.circle.CircleDeque;
+import com.mj.queue.circle.CircleQueue;
 
 public class Main {
 	

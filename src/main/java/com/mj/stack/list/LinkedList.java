@@ -1,7 +1,5 @@
 package com.mj.stack.list;
 
-import com.mj.list.AbstractList;
-
 public class LinkedList<E> extends AbstractList<E> {
 	private Node<E> first;
 	private Node<E> last;

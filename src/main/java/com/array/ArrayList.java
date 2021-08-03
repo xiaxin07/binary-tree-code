@@ -1,5 +1,7 @@
 package com.array;
 
+import org.omg.CORBA.Object;
+
 public class ArrayList<E> {
     private int size;
 
@@ -29,7 +31,7 @@ public class ArrayList<E> {
     }
 
     public void add(E element) {
-
+        add(size, element);
     }
 
     public E get(int index) {
@@ -45,18 +47,48 @@ public class ArrayList<E> {
     }
 
     public void add(int index, E element) {
-        rangeCheck(index);
+        rangeCheckForAnd(index);
 
+        ensureCapacity(size + 1);
         // 扩容
-        for (int i = index + 1; i < size; i++) {
+        for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
         }
+
         elements[index] = element;
         size++;
     }
 
+    private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity >= capacity) {
+            return;
+        }
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        E[] newElements = ((E[])new Object[newCapacity]);
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        elements = newElements;
+        System.out.println(oldCapacity + "扩容为" + newCapacity);
+    }
+
     public E remove(int index) {
-        return null;
+        rangeCheck(index);
+
+        E oldElement = elements[index];
+
+        // 示例
+        //for (int i = index + 1; i < size; i++) {
+        //    elements[i - 1] = elements[i];
+        //}
+
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i + 1];
+        }
+
+        size--;
+        return oldElement;
     }
 
     int indexOf(E element) {

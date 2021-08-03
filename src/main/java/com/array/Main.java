@@ -3,11 +3,13 @@ package com.array;
 public class Main {
     public static void main(String[] args) {
         ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(1, 1);
-        arrayList.add(2, 2);
-        arrayList.add(3, 3);
-        arrayList.add(4, 4);
-        arrayList.add(5, 5);
+        for (int i = 0; i < 10; i++) {
+            arrayList.add(i);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(arrayList.remove(0));
+        }
         System.out.println(arrayList);
     }
 }

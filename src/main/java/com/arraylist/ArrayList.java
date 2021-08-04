@@ -1,6 +1,4 @@
-package com.array;
-
-import org.omg.CORBA.Object;
+package com.arraylist;
 
 public class ArrayList<E> {
     private int size;

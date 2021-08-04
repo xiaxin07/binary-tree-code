@@ -8,6 +8,7 @@ public class ArrayList<E> {
     private E[] elements;
 
     private static final int DEFAULT_CAPACITY = 10;
+    private static final int ELEMENT_NOT_FOUND = -1;
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
@@ -16,6 +17,15 @@ public class ArrayList<E> {
     public ArrayList(int capacity) {
         capacity = capacity > DEFAULT_CAPACITY ? capacity : DEFAULT_CAPACITY;
         elements = (E[])new Object[capacity];
+    }
+
+    public void clear() {
+        // 对象数组需要清除
+        for (int i = 0; i < size; i++) {
+            elements[i] = null;
+        }
+        // 一般size=0
+        size = 0;
     }
 
     public int size() {
@@ -27,7 +37,7 @@ public class ArrayList<E> {
     }
 
     public boolean contains(E element) {
-        return false;
+        return indexOf(element) != ELEMENT_NOT_FOUND;
     }
 
     public void add(E element) {
@@ -59,20 +69,6 @@ public class ArrayList<E> {
         size++;
     }
 
-    private void ensureCapacity(int capacity) {
-        int oldCapacity = elements.length;
-        if (oldCapacity >= capacity) {
-            return;
-        }
-        int newCapacity = oldCapacity + (oldCapacity >> 1);
-        E[] newElements = ((E[])new Object[newCapacity]);
-        for (int i = 0; i < size; i++) {
-            newElements[i] = elements[i];
-        }
-        elements = newElements;
-        System.out.println(oldCapacity + "扩容为" + newCapacity);
-    }
-
     public E remove(int index) {
         rangeCheck(index);
 
@@ -91,19 +87,28 @@ public class ArrayList<E> {
         return oldElement;
     }
 
-    int indexOf(E element) {
-
+    public int indexOf(E element) {
         for (int i = 0; i < size; i++) {
             if (elements[i].equals(element)) {
                 return i;
             }
         }
 
-        return -1;
+        return ELEMENT_NOT_FOUND;
     }
 
-    public void clear() {
-        size = 0;
+    private void ensureCapacity(int capacity) {
+        int oldCapacity = elements.length;
+        if (oldCapacity >= capacity) {
+            return;
+        }
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        E[] newElements = ((E[])new Object[newCapacity]);
+        for (int i = 0; i < size; i++) {
+            newElements[i] = elements[i];
+        }
+        elements = newElements;
+        System.out.println(oldCapacity + "扩容为" + newCapacity);
     }
 
     private void outOfBounds(int index) {

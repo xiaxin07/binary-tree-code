@@ -1,4 +1,4 @@
-package com.leetcode.栈;
+package com.mj.leetcode.栈;
 
 import java.util.Stack;
 

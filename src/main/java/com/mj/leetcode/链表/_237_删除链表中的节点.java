@@ -1,4 +1,4 @@
-package com.leetcode.链表;
+package com.mj.leetcode.链表;
 
 /**
  * https://leetcode-cn.com/problems/delete-node-in-a-linked-list/

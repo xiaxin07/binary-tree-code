@@ -1,4 +1,4 @@
-package com.leetcode.二叉树;
+package com.mj.leetcode.二叉树;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,4 +1,4 @@
-package com.leetcode.二叉树;
+package com.mj.leetcode.二叉树;
 
 public class TreeNode {
 	int val;

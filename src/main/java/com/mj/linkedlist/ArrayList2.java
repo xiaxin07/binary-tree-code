@@ -155,7 +155,9 @@ public class ArrayList2<E> extends AbstractList<E> {
 		int oldCapacity = elements.length;
 		// 15
 		int newCapacity = oldCapacity >> 1;
-		if (size > (newCapacity) || oldCapacity <= DEFAULT_CAPACITY) return;
+		if (size > (newCapacity) || oldCapacity <= DEFAULT_CAPACITY) {
+			return;
+		}
 		
 		// 剩余空间还很多
 		E[] newElements = (E[]) new Object[newCapacity];

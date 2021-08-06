@@ -1,4 +1,4 @@
-package com.leetcode.链表;
+package com.mj.leetcode.链表;
 
 public class _206_反转链表 {
 	

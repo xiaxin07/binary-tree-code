@@ -1,5 +1,6 @@
 package com.linkedlist;
 
+import com.linkedlist.circle.CircleSingleLinkedList;
 import com.linkedlist.single.SingleLinkedList;
 
 public class Main {
@@ -32,7 +33,18 @@ public class Main {
         //System.out.println(list);
     }
 
+    public static void circleSingle() {
+        List<Integer> list = new CircleSingleLinkedList<>();
+        for (int i = 0; i < 20; i++) {
+            list.add(i);
+        }
+        System.out.println(list);
+
+        list.remove(list.size() - 1);
+        System.out.println(list);
+    }
+
     public static void main(String[] args) {
-        bi();
+        circleSingle();
     }
 }

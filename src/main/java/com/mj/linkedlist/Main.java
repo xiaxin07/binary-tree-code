@@ -1,6 +1,7 @@
 package com.mj.linkedlist;
 
 import com.mj.linkedlist.circle.CircleLinkedList;
+import com.mj.linkedlist.circle.SingleCircleLinkedList;
 
 public class Main {
 	
@@ -45,7 +46,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		josephus();
+		//josephus();
 		
 //		testList(new ArrayList<>());
 //		testList(new LinkedList<>());
@@ -59,6 +60,15 @@ public class Main {
 		 * gc root对象
 		 * 1> 被局部变量指向的对象
 		 */
+
+		List<Integer> singleCircleLinkedList = new SingleCircleLinkedList<>();
+		for (int i = 0; i < 20; i++) {
+			singleCircleLinkedList.add(i);
+
+		}
+		System.out.println(singleCircleLinkedList);
+		singleCircleLinkedList.remove(19);
+		System.out.println(singleCircleLinkedList);
 	}
 
 }

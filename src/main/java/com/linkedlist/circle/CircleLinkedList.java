@@ -2,7 +2,7 @@ package com.linkedlist.circle;
 
 import com.linkedlist.AbstractList;
 
-public class CircleSingleLinkedList<E> extends AbstractList<E> {
+public class CircleLinkedList<E> extends AbstractList<E> {
 
     private Node<E> first;
 

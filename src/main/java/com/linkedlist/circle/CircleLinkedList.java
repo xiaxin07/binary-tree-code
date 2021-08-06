@@ -6,6 +6,8 @@ public class CircleLinkedList<E> extends AbstractList<E> {
 
     private Node<E> first;
 
+    private Node<E> last;
+
     @Override
     public void clear() {
         size = 0;
@@ -29,38 +31,65 @@ public class CircleLinkedList<E> extends AbstractList<E> {
     public void add(int index, E element) {
         rangeCheckForAnd(index);
 
-        if (index == 0) {
-            Node<E> newFirst = new Node<>(element, first);
-            Node<E> last = size == 0 ? newFirst : node(size - 1);
-            last.next = newFirst;
-            first = newFirst;
+        // 为什么要分情况？ 添加在尾部不需要获取index位置的值
+        // 还代表一种情况 index=0
+        if (index == size) {
+            Node<E> oldLast = last;
+            last = new Node<>(oldLast, element, first);
+            if (oldLast == null) { // 添加第一个元素
+                first = last;
+                first.next = first;
+                first.prev = first;
+            } else {
+                oldLast.next = last;
+                first.prev = last;
+            }
         } else {
-            Node<E> prev = node(index - 1);
-            prev.next = new Node<>(element, prev.next);
+            Node<E> next = node(index); // first
+            Node<E> prev = next.prev; // last
+            Node<E> node = new Node<>(prev, element, next); // newFirst
+
+            next.prev = node;
+            prev.next = node;
+
+            if (next == first) {
+                first = node;
+            }
         }
+
         size++;
     }
 
     @Override
     public E remove(int index) {
-
         rangeCheck(index);
 
-        Node<E> node = first;
-        if (index == 0) {
-            if (size == 1) {
-                first = null;
-            } else {
-                Node<E> last = node(size - 1);
-                first = first.next;
-                last.next = first;
+        return remove(node(index));
+    }
+
+    private E remove(Node<E> node) {
+
+        if (size == 1) {
+            first = null;
+            last = null;
+        } else {
+
+            // 不分情况
+            Node<E> prev = node.prev;
+            Node<E> next = node.next;
+
+            prev.next = next;
+            next.prev = prev;
+
+            if (node == first) {
+                first = next;
             }
 
-        } else {
-            Node<E> prev = node(index - 1);
-            node = prev.next;
-            prev.next = node.next;
+            if (node == last) {
+                last = prev;
+            }
         }
+
         size--;
         return node.element;
     }
@@ -88,18 +117,29 @@ public class CircleLinkedList<E> extends AbstractList<E> {
 
     private Node<E> node(int index) {
         rangeCheck(index);
-        Node<E> node = first;
-        for (int i = 0; i < index; i++) {
-            node = node.next;
+        Node<E> node;
+        if (index < (size >> 1)) {
+            node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+        } else {
+            node = last;
+            for (int i = size - 1; i > index; i--) {
+                node = node.prev;
+            }
         }
+
         return node;
     }
 
     private static class Node<E> {
         private E element;
         private Node<E> next;
+        private Node<E> prev;
 
-        public Node(E element, Node<E> next) {
+        public Node(Node<E> prev, E element, Node<E> next) {
+            this.prev = prev;
             this.element = element;
             this.next = next;
         }
@@ -107,9 +147,11 @@ public class CircleLinkedList<E> extends AbstractList<E> {
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
+            sb.append(prev == null ? null : prev.element);
+            sb.append("_");
             sb.append(element);
             sb.append("_");
-            sb.append(next.element);
+            sb.append(next == null ? null : next.element);
             return sb.toString();
         }
     }
@@ -123,7 +165,7 @@ public class CircleLinkedList<E> extends AbstractList<E> {
         Node<E> node = first;
         for (int i = 0; i < size; i++) {
             if (i != 0) {
-                sb.append(",");
+                sb.append(", ");
             }
             sb.append(node);
             node = node.next;

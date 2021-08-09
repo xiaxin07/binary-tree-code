@@ -4,6 +4,8 @@ import com.linkedlist.circle.CircleLinkedList;
 import com.linkedlist.circle.CircleSingleLinkedList;
 import com.linkedlist.single.SingleLinkedList;
 
+import javax.xml.soap.Node;
+
 public class Main {
 
     public static void single() {
@@ -56,7 +58,25 @@ public class Main {
         System.out.println(list);
     }
 
+    public static void josephus() {
+        CircleLinkedList<Integer> list = new CircleLinkedList<>();
+        for (int i = 1; i < 9; i++) {
+            list.add(i);
+        }
+        list.reset();
+
+        while (!list.isEmpty()) {
+            list.next();
+            System.out.println(list.next());
+            list.remove();
+        }
+        System.out.println(list);
+
+
+    }
+
+
     public static void main(String[] args) {
-        circleBi();
+        josephus();
     }
 }

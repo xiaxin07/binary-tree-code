@@ -1,4 +1,4 @@
-package com.binarytree.mj.tree;
+package com.mj.tree;
 
 import java.util.Comparator;
 

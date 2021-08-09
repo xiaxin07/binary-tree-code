@@ -1,6 +1,7 @@
 package com.leetcode;
 
-import javax.xml.soap.Node;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LinkedListTest {
     /**
@@ -68,7 +69,118 @@ public class LinkedListTest {
         return false;
     }
 
-    public static void main(String[] args) {
+    /**
+     * 203：https://leetcode-cn.com/problems/remove-linked-list-elements/
+     *
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) {
+            return null;
+        }
+        // 虚拟头结点
+        head = new ListNode(-1, head);
+        // 当前节点
+        ListNode node = head;
 
+        while (node.next != null) {
+            if (node.next.val == val) {
+                node.next = node.next.next;
+            } else {
+                node = node.next;
+            }
+        }
+        return head.next;
+    }
+
+    public ListNode removeElements2(ListNode head, int val) {
+        while (head != null && head.val == val) {
+            head = head.next;
+        }
+        // 已经为null，提前退出
+        if (head == null) {
+            return null;
+        }
+        // 已确定当前head.val != val
+        ListNode pre = head;
+        ListNode cur = head.next;
+        while (cur != null) {
+            if (cur.val == val) {
+                pre.next = cur.next;
+            } else {
+                pre = cur;
+            }
+            cur = cur.next;
+        }
+        return head;
+    }
+
+    public ListNode removeElements3(ListNode head, int val) {
+        if (head == null) {
+            return null;
+        }
+
+        head.next = removeElements3(head.next, val);
+        return head.val == val ? head.next : head;
+    }
+
+    /**
+     * 83：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/
+     *
+     * @param head
+     * @return
+     */
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        head = new ListNode(-101, head);
+        ListNode node = head;
+        while (node.next.next != null) {
+            if (node.next.val == node.next.next.val) {
+                node.next = node.next.next;
+            } else {
+                node = node.next;
+            }
+
+        }
+        return head.next;
+    }
+
+    /**
+     * 876：https://leetcode-cn.com/problems/middle-of-the-linked-list/
+     *
+     * @param head
+     * @return
+     */
+    public ListNode middleNode(ListNode head) {
+        if (head.next == null) {
+            return head;
+        }
+        Map<Integer, ListNode> nodeMap = new HashMap<>();
+
+        ListNode node = head;
+        int i = 0;
+        while (node != null) {
+            nodeMap.put(i++, node);
+            node = node.next;
+        }
+        return nodeMap.get((int)(Math.ceil(i >> 1)));
+    }
+
+    public ListNode middleNode2(ListNode head) {
+        if (head.next == null) {
+            return head;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
     }
 }

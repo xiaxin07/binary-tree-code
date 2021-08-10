@@ -25,6 +25,7 @@ public class Main {
         }
         BinaryTrees.print(binaryTree);
         System.out.println();
+        System.out.println(binaryTree.height());
 
         binaryTree.remove(9);
         BinaryTrees.print(binaryTree);
@@ -38,5 +39,6 @@ public class Main {
         binaryTree.remove(4);
         BinaryTrees.print(binaryTree);
         System.out.println();
+        System.out.println(binaryTree.height2());
     }
 }

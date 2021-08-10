@@ -220,6 +220,10 @@ public class BinaryTree<E> implements BinaryTreeInfo {
             return left == null && right == null;
         }
 
+        public boolean isLeftChild() {
+            return parent != null && this == parent.left;
+        }
+
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();

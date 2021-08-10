@@ -2,6 +2,7 @@ package practice.tree;
 
 import java.util.Comparator;
 
+@SuppressWarnings("unchecked")
 public class BinarySearchTree<E> extends BinaryTree<E> {
 
     private Comparator<E> comparator;
@@ -37,8 +38,9 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         elementNotNullCheck(element);
 
         if (root == null) {
-            root = new Node<>(element, null);
+            root = createNode(element, null);
             size++;
+            afterAdd(root);
             return;
         }
 
@@ -58,14 +60,24 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
             }
         }
 
-        Node<E> newNode = new Node<>(element, parent);
+        Node<E> newNode = createNode(element, parent);
         if (compare > 0) {
             parent.right = newNode;
         } else {
             parent.left = newNode;
         }
 
+        afterAdd(newNode);
+
         size++;
+    }
+
+    public void afterAdd(Node<E> node) {
+
+    }
+
+    public Node<E> createNode(E element, Node<E> parent) {
+        return new Node<>(element, parent);
     }
 
     public void remove(E element) {
@@ -97,20 +109,30 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
             } else {
                 node.parent.left = replacement;
             }
+
+            afterRemove(replacement);
+
             return;
         }
 
         if (node.parent == null) {
             root = null;
+            afterRemove(node);
             return;
         }
+
         if (node == node.parent.right) {
             node.parent.right = null;
         } else {
             node.parent.left = null;
         }
+
+        afterRemove(node);
     }
 
+    public void afterRemove(Node<E> node) {
+
+    }
 
     public Node<E> node(E element) {
         Node<E> node = root;
@@ -128,13 +150,11 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         return null;
     }
 
-
     private int compare(E element1, E element2) {
         if (comparator != null) {
             return comparator.compare(element1, element2);
         }
-        return ((Comparable<E>) element1).compareTo(element2);
+        return ((Comparable<E>)element1).compareTo(element2);
     }
-
 
 }

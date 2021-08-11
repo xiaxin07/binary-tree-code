@@ -42,7 +42,7 @@ public class Main {
         System.out.println(binaryTree.height2());
     }
 
-    public static void testAVLAdd() {
+    public static void testAVL() {
         BinarySearchTree<Integer> binaryTree = new AVLTree<>();
         int[] arr = new int[] {13, 14, 15, 12, 11, 17, 16, 8, 9, 1};
         for (int i = 0; i < arr.length; i++) {
@@ -66,7 +66,32 @@ public class Main {
 
     }
 
+    public static void testRB() {
+        BinarySearchTree<Integer> binaryTree = new RBTree<>();
+        int[] arr = new int[] {36, 70, 64, 8, 83, 49, 100, 93, 54, 21, 87, 76, 85, 4, 19, 72, 86};
+        for (int i = 0; i < arr.length; i++) {
+            binaryTree.add(arr[i]);
+        }
+        System.out.println();
+        BinaryTrees.print(binaryTree);
+        System.out.println();
+
+        binaryTree.remove(19);
+        BinaryTrees.print(binaryTree);
+        System.out.println();
+
+        binaryTree.remove(21);
+        BinaryTrees.print(binaryTree);
+        System.out.println();
+
+        binaryTree.remove(100);
+        BinaryTrees.print(binaryTree);
+        System.out.println();
+
+    }
+
+
     public static void main(String[] args) {
-        testAVLAdd();
+        testRB();
     }
 }

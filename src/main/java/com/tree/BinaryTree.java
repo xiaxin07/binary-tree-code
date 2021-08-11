@@ -1,9 +1,9 @@
-package com.binarytree;
+package com.tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.binarytree.printer.BinaryTreeInfo;
+import com.tree.printer.BinaryTreeInfo;
 
 public class BinaryTree<E> implements BinaryTreeInfo {
 

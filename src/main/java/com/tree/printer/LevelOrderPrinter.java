@@ -1,4 +1,4 @@
-package com.binarytree.printer;
+package com.tree.printer;
 
 import java.util.ArrayList;
 import java.util.Collection;

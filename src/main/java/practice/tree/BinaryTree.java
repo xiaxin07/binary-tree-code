@@ -10,6 +10,21 @@ public class BinaryTree<E> implements BinaryTreeInfo {
 
     protected Node<E> root;
 
+    protected int size;
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void clear() {
+        size = 0;
+        root = null;
+    }
+
     public void preorder(Visitor<E> visitor) {
         if (visitor == null) {
             return;
@@ -222,6 +237,22 @@ public class BinaryTree<E> implements BinaryTreeInfo {
 
         public boolean isLeftChild() {
             return parent != null && this == parent.left;
+        }
+
+        public boolean isRightChild() {
+            return parent != null && this == parent.right;
+        }
+
+        public Node<E> sibling() {
+
+            if (isLeftChild()) {
+                return parent.right;
+            }
+            if (isRightChild()) {
+                return parent.left;
+            }
+
+            return null;
         }
 
         @Override

@@ -15,20 +15,6 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         this.comparator = comparator;
     }
 
-    private int size;
-
-    public int size() {
-        return size;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    public void clear() {
-        size = 0;
-        root = null;
-    }
 
     public boolean contains(E element) {
         return node(element) != null;
@@ -110,14 +96,14 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                 node.parent.left = replacement;
             }
 
-            afterRemove(replacement);
+            afterRemove(node, replacement);
 
             return;
         }
 
         if (node.parent == null) {
             root = null;
-            afterRemove(node);
+            afterRemove(node, null);
             return;
         }
 
@@ -127,10 +113,10 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
             node.parent.left = null;
         }
 
-        afterRemove(node);
+        afterRemove(node, null);
     }
 
-    public void afterRemove(Node<E> node) {
+    public void afterRemove(Node<E> node, Node<E> replacement) {
 
     }
 

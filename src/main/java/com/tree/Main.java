@@ -1,7 +1,7 @@
-package com.binarytree;
+package com.tree;
 
-import com.binarytree.BinaryTree.Visitor;
-import com.binarytree.printer.BinaryTrees;
+import com.tree.BinaryTree.Visitor;
+import com.tree.printer.BinaryTrees;
 
 public class Main {
     public static void main(String[] args) {

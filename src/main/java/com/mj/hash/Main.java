@@ -1,7 +1,5 @@
 package com.mj.hash;
 
-import java.util.List;
-
 import com.mj.hash.Times.Task;
 import com.mj.hash.file.FileInfo;
 import com.mj.hash.file.Files;
@@ -40,7 +38,7 @@ public class Main {
     }
 
     static void test1() {
-        String filepath = "C:\\Users\\MJ Lee\\Desktop\\src\\java\\util\\concurrent";
+        String filepath = "D:\\develop\\java1.8\\jdk1.8.0_102\\src\\java\\util\\concurrent";
         FileInfo fileInfo = Files.read(filepath, null);
         String[] words = fileInfo.words();
 
@@ -141,10 +139,10 @@ public class Main {
 //		test5(new HashMap<>());
 
         test1();
-        test2(new LinkedHashMap<>());
-        test3(new LinkedHashMap<>());
-        test4(new LinkedHashMap<>());
-        test5(new LinkedHashMap<>());
+        test2(new HashMap<>());
+        test3(new HashMap<>());
+        test4(new HashMap<>());
+        test5(new HashMap<>());
 
         java.util.HashMap<String, String> map;
         java.util.LinkedHashMap<String, String> map2;

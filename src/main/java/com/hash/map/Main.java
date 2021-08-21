@@ -34,7 +34,7 @@ public class Main {
     }
 
     static void test1() {
-        String filepath = "C:\\Users\\MJ Lee\\Desktop\\src\\java\\util\\concurrent";
+        String filepath = "D:\\develop\\java1.8\\jdk1.8.0_102\\src\\java\\util\\concurrent";
         FileInfo fileInfo = Files.read(filepath, null);
         String[] words = fileInfo.words();
 
@@ -129,59 +129,56 @@ public class Main {
 
     public static void main(String[] args) {
 
-        HashMap<Object, Object> hashMap = new HashMap<>();
-
-        hashMap.put("jack", 1);
-        hashMap.put("rose", 5);
-        hashMap.put("xiaxin", 10);
-        hashMap.put("jack", 10);
-        hashMap.put("rose", 10);
-
-        for (int i = 0; i < 19; i++) {
-            hashMap.put(new Key(i), i);
-        }
-        System.out.println(hashMap.size());
-        System.out.println();
-        hashMap.put(new Key(5), 10);
-        hashMap.put(new Key(6), 11);
-        hashMap.put(new Key(7), 12);
-        hashMap.put(new Key(8), 13);
-        hashMap.print();
-
-        System.out.println(hashMap.size());
-        System.out.println();
-        hashMap.remove(new Key(4));
-        hashMap.remove(new Key(5));
-        hashMap.remove(new Key(6));
-        hashMap.remove(new Key(7));
-        System.out.println("=============================-删除后-=============================");
-        System.out.println(hashMap.size());
-        System.out.println(hashMap.get(new Key(2)));
-        System.out.println(hashMap.get(new Key(8)));
-
-        hashMap.print();
-        System.out.println();
-        hashMap.traversal(new Map.Visitor<Object, Object>() {
-            @Override
-            public boolean visit(Object key, Object value) {
-                System.out.println(key + "=" + value);
-                return false;
-            }
-        });
-//		test1();
-//		test2(new HashMap<>());
-//		test3(new HashMap<>());
-//		test4(new HashMap<>());
-//		test5(new HashMap<>());
+//        HashMap<Object, Object> hashMap = new HashMap<>();
+//
+//        hashMap.put("jack", 1);
+//        hashMap.put("rose", 5);
+//        hashMap.put("xiaxin", 10);
+//        hashMap.put("jack", 10);
+//        hashMap.put("rose", 10);
+//
+//        for (int i = 0; i < 19; i++) {
+//            hashMap.put(new Key(i), i);
+//        }
+//        System.out.println(hashMap.size());
+//        System.out.println();
+//        hashMap.put(new Key(5), 10);
+//        hashMap.put(new Key(6), 11);
+//        hashMap.put(new Key(7), 12);
+//        hashMap.put(new Key(8), 13);
+//        hashMap.print();
+//
+//        System.out.println(hashMap.size());
+//        System.out.println();
+//        hashMap.remove(new Key(4));
+//        hashMap.remove(new Key(5));
+//        hashMap.remove(new Key(6));
+//        hashMap.remove(new Key(7));
+//        System.out.println("=============================-删除后-=============================");
+//        System.out.println(hashMap.size());
+//        System.out.println(hashMap.get(new Key(2)));
+//        System.out.println(hashMap.get(new Key(8)));
+//
+//        hashMap.print();
+//        System.out.println();
+//        hashMap.traversal(new Map.Visitor<Object, Object>() {
+//            @Override
+//            public boolean visit(Object key, Object value) {
+//                System.out.println(key + "=" + value);
+//                return false;
+//            }
+//        });
+		test1();
+		test2(new HashMap<>());
+		test3(new HashMap<>());
+		test4(new HashMap<>());
+		test5(new HashMap<>());
 
 //        test1();
-//        test2(new LinkedHashMap<>());
-//        test3(new LinkedHashMap<>());
-//        test4(new LinkedHashMap<>());
-//        test5(new LinkedHashMap<>());
+//        test2(new HashMap<>());
+//        test3(new HashMap<>());
+//        test4(new HashMap<>());
 
-        java.util.HashMap<String, String> map;
-        java.util.LinkedHashMap<String, String> map2;
     }
 
 }

@@ -12,6 +12,7 @@ public class HashMap<K, V> implements Map<K, V> {
     private static final boolean RED = false;
     private static final boolean BLACK = true;
     private static final int DEFAULT_CAPACITY = 1 << 4;
+    private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     private int size;
 
@@ -46,6 +47,7 @@ public class HashMap<K, V> implements Map<K, V> {
     @Override
     public V put(K key, V value) {
 
+        resize();
         int index = index(key);
 
         Node<K, V> root = table[index];
@@ -119,6 +121,98 @@ public class HashMap<K, V> implements Map<K, V> {
         fixAfterPut(newNode);
 
         return null;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(12 * 1.0 / 16);
+    }
+
+    private void resize() {
+        if ((size * 1.0 / table.length) <= DEFAULT_LOAD_FACTOR) {
+            return;
+        }
+
+        Node<K, V>[] oldTable = table;
+        table = new Node[oldTable.length << 1];
+
+        Queue<Node<K, V>> queue = new LinkedList<>();
+        for (int i = 0; i < oldTable.length; i++) {
+            if (oldTable[i] == null) {
+                continue;
+            }
+
+            queue.offer(oldTable[i]);
+
+            while (!queue.isEmpty()) {
+                Node<K, V> node = queue.poll();
+
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+
+                // 挪动代码得放到最后面
+                moveNode(node);
+            }
+        }
+
+    }
+
+    private void moveNode(Node<K, V> newNode) {
+        newNode.parent = null;
+        newNode.left = null;
+        newNode.right = null;
+        newNode.color = RED;
+
+        int index = index(newNode);
+        Node<K, V> root = table[index];
+        if (root == null) {
+            root = newNode;
+            table[index] = newNode;
+            fixAfterPut(root);
+            return;
+        }
+
+        Node<K, V> parent;
+        Node<K, V> node = root;
+        int cmp = 0;
+        K k1 = newNode.key;
+        int h1 = newNode.hash;
+        do {
+            parent = node;
+            K k2 = node.key;
+            int h2 = node.hash;
+            if (h1 > h2) {
+                cmp = 1;
+            } else if (h1 < h2) {
+                cmp = -1;
+            } else if (Objects.equals(k1, k2)) {
+                cmp = 0;
+            } else if (k1 != null && k2 != null
+                    && k1 instanceof Comparable
+                    && k1.getClass() == k2.getClass()
+                    && (cmp = ((Comparable) k1).compareTo(k2)) != 0) {
+            } else {
+                cmp = System.identityHashCode(k1) - System.identityHashCode(k2);
+            }
+
+            if (cmp > 0) {
+                node = node.right;
+            } else if (cmp < 0) {
+                node = node.left;
+            }
+        } while (node != null);
+
+        newNode.parent = parent;
+        if (cmp > 0) {
+            parent.right = newNode;
+        } else {
+            parent.left = newNode;
+        }
+
+        fixAfterPut(newNode);
     }
 
     @Override
@@ -227,11 +321,33 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        return node(key) != null;
     }
 
     @Override
     public boolean containsValue(V value) {
+        if (size == 0) {
+            return false;
+        }
+        Queue<Node<K, V>> queue = new LinkedList<>();
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] == null) {
+                continue;
+            }
+            queue.offer(table[i]);
+            while (!queue.isEmpty()) {
+                Node<K, V> node = queue.poll();
+                if (Objects.equals(node.value, value)) {
+                    return true;
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
         return false;
     }
 

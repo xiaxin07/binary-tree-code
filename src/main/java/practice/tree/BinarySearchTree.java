@@ -96,14 +96,14 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                 node.parent.left = replacement;
             }
 
-            afterRemove(node, replacement);
+            afterRemove(replacement);
 
             return;
         }
 
         if (node.parent == null) {
             root = null;
-            afterRemove(node, null);
+            afterRemove(node);
             return;
         }
 
@@ -113,10 +113,10 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
             node.parent.left = null;
         }
 
-        afterRemove(node, null);
+        afterRemove(node);
     }
 
-    public void afterRemove(Node<E> node, Node<E> replacement) {
+    public void afterRemove(Node<E> node) {
 
     }
 
@@ -140,7 +140,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         if (comparator != null) {
             return comparator.compare(element1, element2);
         }
-        return ((Comparable<E>)element1).compareTo(element2);
+        return ((Comparable<E>) element1).compareTo(element2);
     }
 
 }

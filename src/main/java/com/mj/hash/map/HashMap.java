@@ -522,6 +522,7 @@ public class HashMap<K, V> implements Map<K, V> {
 		Node<K, V> uncle = parent.sibling();
 		// 祖父节点
 		Node<K, V> grand = red(parent.parent);
+
 		if (isRed(uncle)) { // 叔父节点是红色【B树节点上溢】
 			black(parent);
 			black(uncle);

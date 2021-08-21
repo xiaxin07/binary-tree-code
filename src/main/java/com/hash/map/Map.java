@@ -1,4 +1,4 @@
-package com.hash;
+package com.hash.map;
 
 public interface Map<K, V> {
     int size();

@@ -1,4 +1,4 @@
-package com.hash;
+package com.hash.map;
 
 import com.hash.printer.BinaryTreeInfo;
 import com.hash.printer.BinaryTrees;
@@ -391,13 +391,76 @@ public class HashMap<K, V> implements Map<K, V> {
     public void fixAfterRemove(Node<K, V> node) {
 
         if (isRed(node)) {
+            black(node);
             return;
         }
         Node<K, V> parent = node.parent;
-        Node<K, V> sibling = node.sibling();
 
+        if (parent == null) {
+            return;
+        }
 
-        boolean left = parent.left == null;
+        boolean left = parent.left == null || node.isLeftChild();
+        Node<K, V> sibling = left ? parent.right : parent.left;
+
+        if (left) {
+
+            if (isRed(sibling)) {
+                red(parent);
+                black(sibling);
+                rotateLeft(parent);
+                sibling = parent.right;
+            }
+
+            if (isBlack(sibling.left) && isBlack(sibling.right)) {
+                boolean parentBlack = isBlack(parent);
+                black(parent);
+                red(sibling);
+                if (parentBlack) {
+                    fixAfterRemove(parent);
+                }
+
+            } else {
+                if (isBlack(sibling.right)) {
+                    rotateRight(sibling);
+                    sibling = parent.right;
+                }
+
+                color(sibling, colorOf(parent));
+                black(parent);
+                black(sibling.right);
+
+                rotateLeft(parent);
+            }
+        } else {
+            if (isRed(sibling)) {
+                red(parent);
+                black(sibling);
+                rotateRight(parent);
+                sibling = parent.left;
+            }
+
+            if (isBlack(sibling.left) && isBlack(sibling.right)) {
+                boolean parentBlack = parent.color;
+                black(parent);
+                red(sibling);
+                if (parentBlack) {
+                    fixAfterRemove(parent);
+                }
+
+            } else {
+                if (isBlack(sibling.left)) {
+                    rotateLeft(sibling);
+                    sibling = parent.left;
+                }
+
+                color(sibling, colorOf(parent));
+                black(parent);
+                black(sibling.left);
+
+                rotateRight(parent);
+            }
+        }
 
     }
 

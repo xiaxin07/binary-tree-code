@@ -1,5 +1,7 @@
-package com.hash;
+package com.hash.map;
 
+import com.hash.Asserts;
+import com.hash.Times;
 import com.hash.file.FileInfo;
 import com.hash.file.Files;
 import com.hash.model.Key;
@@ -140,19 +142,32 @@ public class Main {
         }
         System.out.println(hashMap.size());
         System.out.println();
-        hashMap.print();
         hashMap.put(new Key(5), 10);
         hashMap.put(new Key(6), 11);
         hashMap.put(new Key(7), 12);
         hashMap.put(new Key(8), 13);
         hashMap.print();
+
+        System.out.println(hashMap.size());
+        System.out.println();
+        hashMap.remove(new Key(4));
+        hashMap.remove(new Key(5));
+        hashMap.remove(new Key(6));
+        hashMap.remove(new Key(7));
+        System.out.println("=============================-删除后-=============================");
         System.out.println(hashMap.size());
         System.out.println(hashMap.get(new Key(2)));
-        System.out.println(hashMap.get(new Key(5)));
-        System.out.println(hashMap.get(new Key(6)));
-        System.out.println(hashMap.get(new Key(7)));
         System.out.println(hashMap.get(new Key(8)));
 
+        hashMap.print();
+        System.out.println();
+        hashMap.traversal(new Map.Visitor<Object, Object>() {
+            @Override
+            public boolean visit(Object key, Object value) {
+                System.out.println(key + "=" + value);
+                return false;
+            }
+        });
 //		test1();
 //		test2(new HashMap<>());
 //		test3(new HashMap<>());

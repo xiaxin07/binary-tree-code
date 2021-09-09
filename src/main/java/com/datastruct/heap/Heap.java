@@ -2,30 +2,12 @@ package com.datastruct.heap;
 
 public interface Heap<E> {
 
-    /**
-     * 元素的数量
-     *
-     * @return
-     */
     int size();
 
-    /**
-     * 是否为空
-     *
-     * @return
-     */
     boolean isEmpty();
 
-    /**
-     * 清空
-     */
     void clear();
 
-    /**
-     * 添加元素
-     *
-     * @param element
-     */
     void add(E element);
 
     /**

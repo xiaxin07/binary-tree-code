@@ -12,7 +12,7 @@ public interface Heap<E> {
 
     E get();
 
-    void remove();
+    E remove();
 
     E replace(E element);
 }

@@ -1,33 +1,50 @@
 package practice.heap;
 
-import org.omg.CORBA.Object;
+import practice.heap.printer.BinaryTreeInfo;
 
 import java.util.Comparator;
 
-public class BinaryHeap<E> implements Heap<E> {
+public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
-    private int size;
     private E[] elements;
-    private Comparator<E> comparator;
+
     private static final int DEFAULT_CAPACITY = 10;
 
     public BinaryHeap() {
-        this(null);
+        this(null, null);
     }
 
     public BinaryHeap(Comparator<E> comparator) {
-        elements = (E[]) new Object[DEFAULT_CAPACITY];
-        this.comparator = comparator;
+        this(null, comparator);
     }
 
-    @Override
-    public int size() {
-        return size;
+    public BinaryHeap(E[] elements) {
+        this(elements, null);
     }
 
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
+    public BinaryHeap(E[] elements, Comparator<E> comparator) {
+        super(comparator);
+        if (elements == null || elements.length == 0) {
+            this.elements = (E[])new Object[DEFAULT_CAPACITY];
+            return;
+        }
+        size = elements.length;
+        int capacity = Math.max(size, DEFAULT_CAPACITY);
+        this.elements = ((E[])new Object[capacity]);
+        System.arraycopy(elements, 0, this.elements, 0, size);
+
+        heapify();
+    }
+
+    private void heapify() {
+
+        //for (int index = 1; index < size; index++) {
+        //    siftDown(index);
+        //}
+
+        for (int index = (size >> 1) - 1; index >= 0; index--) {
+            siftDown(index);
+        }
     }
 
     @Override
@@ -56,7 +73,7 @@ public class BinaryHeap<E> implements Heap<E> {
             int parentIndex = (index - 1) >> 1;
             E parent = elements[parentIndex];
 
-            if (cmp(element, parent) <= 0) {
+            if (compare(element, parent) <= 0) {
                 break;
             }
 
@@ -72,8 +89,8 @@ public class BinaryHeap<E> implements Heap<E> {
         if (oldCapacity >= capacity) {
             return;
         }
-        int newCapacity = oldCapacity + oldCapacity >> 1;
-        E[] newElements = ((E[]) new Object[newCapacity]);
+        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        E[] newElements = ((E[])new Object[newCapacity]);
         /*for (int i = 0; i < elements.length; i++) {
             newElements[i] = elements[i];
         }*/
@@ -88,30 +105,76 @@ public class BinaryHeap<E> implements Heap<E> {
     }
 
     @Override
-    public void remove() {
+    public E remove() {
+        emptyCheck();
+        int lastIndex = --size;
+        E root = elements[0];
+        elements[0] = elements[lastIndex];
+        elements[lastIndex] = null;
 
+        siftDown(0);
+        return root;
+    }
+
+    private void siftDown(int index) {
+
+        E element = elements[index];
+
+        int half = size >> 1;
+
+        while (index < half) {
+            int childIndex = (index << 1) + 1;
+            E child = elements[childIndex];
+
+            int rightIndex = childIndex + 1;
+            if (rightIndex < size && compare(child, elements[rightIndex]) <= 0) {
+                child = elements[childIndex = rightIndex];
+            }
+
+            if (compare(element, child) >= 0) {
+                break;
+            }
+
+            elements[index] = child;
+            index = childIndex;
+        }
+
+        elements[index] = element;
     }
 
     @Override
     public E replace(E element) {
-        return null;
-    }
-
-    private int cmp(E e1, E e2) {
-        return comparator == null ?
-                ((Comparable<E>) e1).compareTo(e2) :
-                comparator.compare(e1, e2);
-    }
-
-    private void emptyCheck() {
+        elementNotNullCheck(element);
         if (size == 0) {
-            throw new IndexOutOfBoundsException("heap is empty");
+            elements[0] = element;
+            return null;
         }
+        E root = elements[0];
+        elements[0] = element;
+
+        siftDown(0);
+        return root;
     }
 
-    private void elementNotNullCheck(E element) {
-        if (element == null) {
-            throw new IllegalArgumentException("element must not be null");
-        }
+    @Override
+    public Object root() {
+        return 0;
+    }
+
+    @Override
+    public Object left(Object node) {
+        int index = (((int)node) << 1) + 1;
+        return index >= size ? null : index;
+    }
+
+    @Override
+    public Object right(Object node) {
+        int index = (((int)node) << 1) + 2;
+        return index >= size ? null : index;
+    }
+
+    @Override
+    public Object string(Object node) {
+        return elements[((int)node)];
     }
 }

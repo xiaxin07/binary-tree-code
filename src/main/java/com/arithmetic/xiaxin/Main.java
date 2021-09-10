@@ -5,6 +5,8 @@ import com.arithmetic.xiaxin.sort.cmp.BubbleSort1;
 import com.arithmetic.xiaxin.sort.cmp.BubbleSort2;
 import com.arithmetic.xiaxin.sort.cmp.BubbleSort3;
 import com.arithmetic.xiaxin.sort.cmp.HeapSort;
+import com.arithmetic.xiaxin.sort.cmp.InsertionSort1;
+import com.arithmetic.xiaxin.sort.cmp.InsertionSort2;
 import com.arithmetic.xiaxin.sort.cmp.SelectionSort;
 import com.arithmetic.xiaxin.tools.Asserts;
 import com.arithmetic.xiaxin.tools.Integers;
@@ -20,7 +22,9 @@ public class Main {
             new BubbleSort2(),
             new BubbleSort3(),
             new SelectionSort(),
-            new HeapSort());
+            new HeapSort(),
+            new InsertionSort1(),
+            new InsertionSort2());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {

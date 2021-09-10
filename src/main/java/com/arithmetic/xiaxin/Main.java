@@ -4,6 +4,7 @@ import com.arithmetic.xiaxin.sort.Sort;
 import com.arithmetic.xiaxin.sort.cmp.BubbleSort1;
 import com.arithmetic.xiaxin.sort.cmp.BubbleSort2;
 import com.arithmetic.xiaxin.sort.cmp.BubbleSort3;
+import com.arithmetic.xiaxin.sort.cmp.HeapSort;
 import com.arithmetic.xiaxin.sort.cmp.SelectionSort;
 import com.arithmetic.xiaxin.tools.Asserts;
 import com.arithmetic.xiaxin.tools.Integers;
@@ -14,11 +15,12 @@ public class Main {
     public static void main(String[] args) {
         Integer[] arr = {10, 6, 7, 4, 3, 5, 9};
         testSorts(
-                arr,
-                new BubbleSort1(),
-                new BubbleSort2(),
-                new BubbleSort3(),
-                new SelectionSort());
+            arr,
+            new BubbleSort1(),
+            new BubbleSort2(),
+            new BubbleSort3(),
+            new SelectionSort(),
+            new HeapSort());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {

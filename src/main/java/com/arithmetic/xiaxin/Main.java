@@ -20,7 +20,8 @@ public class Main {
                 new InsertionSort1(),
                 new InsertionSort2(),
                 new InsertionSort3(),
-                new MergeSort());
+                new MergeSort(),
+                new QuickSort());
     }
 
     static void testSorts(Integer[] array, Sort... sorts) {

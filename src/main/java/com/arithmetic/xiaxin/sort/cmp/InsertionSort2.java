@@ -9,7 +9,7 @@ public class InsertionSort2<T extends Comparable<T>> extends Sort<T> {
         for (int i = 1; i < array.length; i++) {
             int cur = i;
             T val = array[cur];
-            while (cur > 0 && cmp(cur, cur - 1) < 0) {
+            while (cur > 0 && cmp(val, array[cur - 1]) < 0) {
                 array[cur] = array[cur - 1];
                 cur--;
             }
